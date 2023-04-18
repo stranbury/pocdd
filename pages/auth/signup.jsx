@@ -1,6 +1,6 @@
 import React , { useState}from 'react';
 import { useRouter } from 'next/router';
-// import { useAuth } from 'lib/auth';
+import supabase from '../../tools/supabase';
 const Signup = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -32,7 +32,7 @@ const Signup = () => {
                 console.log('Error during sign in:', error.message);
               } else {
                 console.log(data)
-                router.push('/'); // Redirect to the home page after successful sign in
+                router.push('/setup'); // Redirect to the home page after successful sign in
               }
           }else {
               alert('Password and Confirm Password should be same');

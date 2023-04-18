@@ -1,5 +1,8 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Link from "next/link";
+import Layout from '../components/Layout';
+import { useAuth } from '../hooks/useAuth';
+import { useRouter } from 'next/router';
 // Dummy data representing files uploaded by the user
 const userFiles = [
   { id: 1, name: "file1.pdf", uploadDate: "2023-04-01" },
@@ -25,6 +28,23 @@ const Dashboard = () => {
   const downloadFile = (fileId) => {
     console.log("Downloading file:", fileId);
   };
+  
+   const { user, loading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push('/');
+    }
+  }, [user, loading, router]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!user) {
+    return <div>Redirecting to the index page...</div>;
+  }
 
   return (
     <div className="container mx-auto py-16 px-4 font-sans">
@@ -84,6 +104,6 @@ const Dashboard = () => {
     </div>
   );
 };
-
+Dashboard.Layout = Layout;
 export default Dashboard;
 
