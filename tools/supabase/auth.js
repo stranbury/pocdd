@@ -12,7 +12,7 @@ export const Signup = async (email, password, metadata) =>
 
 export const Login = async (email, password) =>
   executeQuery(
-    supabase.auth.signIn({
+    supabase.auth.signInWithPassword({
       email,
       password,
     })
@@ -27,12 +27,12 @@ export const SendVerificationEmail = async (email) =>
   executeQuery(supabase.auth.api.sendMagicLinkEmail(email));
 
 export const ResetPassword = async (email) =>
-  executeQuery(supabase.auth.api.resetPasswordForEmail(email));
+  executeQuery(supabase.auth.api.resetPasswordForEmail(email, { redirectTo: 'http://localhost:3000/reset' }));
 
 export const UpdatePassword = async (email, password) =>
   executeQuery(supabase.auth.api.updateUser(email, { password }));
 
-export const GetCurrentUser = async () => executeQuery(supabase.auth.user());
+export const GetCurrentUser = async () => executeQuery(supabase.auth.getUser());
 
 export const GetSession = async () => executeQuery(supabase.auth.getSession());
 
@@ -48,7 +48,8 @@ export const checkEmailVerification = async () => {
 
 export const checkUserSession = async () => {
   try {
-    const session = await GetSession();
+    const {session} = await GetSession();
+    console.log('session', session);
     return session ? true : false;
   } catch (error) {
     console.error('Error checking user session:', error);

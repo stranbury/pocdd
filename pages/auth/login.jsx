@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import supabase from '../../tools/supabase';
+import { Login } from '../../tools/supabase/auth';
 // import { useAuth } from 'lib/auth';
-const Login = () => {
+const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isPasswordForgot, setIsPasswordForgot] = useState(false);
   const router = useRouter();
 
   const handleSignIn = async (e) => {
     e.preventDefault();
-    const { data, error } = await supabase.auth.signInWithPassword({email,password}); 
+    const { data, error } = await Login(email,password); 
     if (error) {
       console.log('Error during sign in:', error.message);
     } else {
@@ -61,7 +62,7 @@ const Login = () => {
               Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eligendi nam
               dolorum aliquam, quibusdam aperiam voluptatum.
             </p>
-
+            
             <form onSubmit={handleSignIn} className="mt-8 grid grid-cols-6 gap-6">
               <div className="col-span-6">
                 <label
@@ -117,4 +118,4 @@ const Login = () => {
       </div>
     </section>)
 }; 
-export default Login;
+export default LoginPage;
