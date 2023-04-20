@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import feather from 'feather-icons'
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { GetCurrentUser } from '../tools/supabase/auth';
+import { GetCurrentUser, Logout } from '../tools/supabase/auth';
 const UserLogin = () => {
     const [user, setUser] = useState(null);
     const router = useRouter();

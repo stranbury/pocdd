@@ -1,7 +1,7 @@
 import React , { useState}from 'react';
 import { useRouter } from 'next/router';
-import supabase from '../../tools/supabase';
-const Signup = () => {
+import { Signup } from '../../tools/supabase/auth';
+const SignupPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -12,31 +12,22 @@ const Signup = () => {
 
     const handleSignUp = async (e) => {
     e.preventDefault();
-    console.log()
-        if (password !== confirmPassword) {
-          const { data, error } = await supabase.auth.signUp(
-            {
-              email,
-              password,
-              options: {
-                data: {
-                  first_name: firstName,
-                  last_name: lastName,
-                }
-              }
-            }
-          )
-
-              // const { data, error } = await supabase.auth.signInWithPassword({email,password}); 
-              if (error) {
-                console.log('Error during sign in:', error.message);
-              } else {
+    try {
+      if (password !== confirmPassword) {
+          const metadata = { first_name: firstName, last_name: lastName };
+          const newUser = await Signup(email, password, metadata);           
                 console.log(data)
                 router.push('/setup'); // Redirect to the home page after successful sign in
-              }
+   
           }else {
               alert('Password and Confirm Password should be same');
             }
+      
+    } catch (error) {
+        console.log('Error during sign in:', error.message);
+        alert("Impossible de créer un compte avec ces informations")
+    }
+        
   }
     return (
     <section className="bg-white dark:bg-gray-900">
@@ -248,4 +239,4 @@ const Signup = () => {
   </div>
 </section>)
 }; 
-export default Signup;
+export default SignupPage;

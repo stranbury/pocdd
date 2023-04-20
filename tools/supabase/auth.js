@@ -6,7 +6,9 @@ export const Signup = async (email, password, metadata) =>
     supabase.auth.signUp({
       email,
       password,
-      data: metadata,
+      options: {
+        data: metadata  
+      }
     })
   );
 
@@ -48,8 +50,8 @@ export const checkEmailVerification = async () => {
 
 export const checkUserSession = async () => {
   try {
-    const {session} = await GetSession();
-    console.log('session', session);
+    const session = await GetSession();
+    // console.log('session', session);
     return session ? true : false;
   } catch (error) {
     console.error('Error checking user session:', error);

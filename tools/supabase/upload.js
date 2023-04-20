@@ -79,5 +79,12 @@ export const getUploadedFileUrlWithExpiryAndMetadata = async (name, expiry, meta
     return data;
 }
 
+export const generateFileNames = (file, company , actor , type) => {
+    const fileName = file.name;
+    const fileExtension = fileName.split('.').pop();
+    const fileBaseName = fileName.replace(`.${fileExtension}`, '');
+    const newFileName = `${fileBaseName}-${company}-${type}-${actor}.${fileExtension}`;
+    return newFileName;
+}
 
 

@@ -11,7 +11,7 @@ export const getFilesByCompanyId = async (companyId) =>
 
 export const getFilesByActorIdAndCompanyId = async (actorId, companyId) =>
   executeQuery(
-    supabase.from("files").select("*").eq("actor", actorId).eq("company", companyId)
+    supabase.from("files").select("*").eq("uploadBy", actorId).eq("company", companyId)
   );
 
 export const getFileById = async (id) =>

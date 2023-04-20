@@ -2,11 +2,11 @@ import supabase from './client';
 import { executeQuery } from "../utils";
 
 export const getCompanies = async () =>
-  executeQuery(supabase.from("company").select("*").order("id", { ascending: false }));
+  executeQuery(supabase.from("company").select('*'));
 
 export const getActiveCompanies = async () =>
   executeQuery(
-    supabase.from("company").select("*").eq("active", true).order("id", { ascending: false })
+    supabase.from("company").select().is("active", true).order("id", { ascending: false })
   );
 
 export const getCompanyByName = async (name) =>

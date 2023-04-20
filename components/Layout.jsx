@@ -12,7 +12,7 @@ export default function Layout({ children }) {
   useEffect(()=>{
     const checkUser = async () => {
       const user = await checkUserSession();
-      console.log(user)
+      console.log('checkUser', user)
       setIsLogin(user)
     }
     checkUser()
